@@ -4,6 +4,9 @@ from enum import Enum
 
 pygame.init()
 
+WindowWidth = 640
+WindowHeight = 480
+
 class Direction(Enum):
     LEFT = 1
     UP = 2
@@ -11,10 +14,10 @@ class Direction(Enum):
     DOWN = 4
 
 class Snake:
-    def __init__( self, windowWidth, windowHeight ):
+    def __init__( self ):
         self.direction = Direction.RIGHT
-        self.body = pygame.Rect(( windowWidth / 2, windowHeight / 2, 10, 10 ))
-    
+        self.body = pygame.Rect(( WindowWidth / 2, WindowHeight / 2, 10, 10 ))
+
     def Move( self, moveRate ):
         if self.direction == Direction.LEFT:
             if self.body.left >= moveRate:
@@ -29,12 +32,9 @@ class Snake:
             if self.body.bottom <= WindowHeight - moveRate:
                 self.body.move_ip( 0, moveRate)
 
-WindowWidth = 640
-WindowHeight = 480
-
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
 
-snake = Snake(WindowWidth, WindowHeight)
+snake = Snake()
 
 clock = pygame.time.Clock()
 
