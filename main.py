@@ -1,6 +1,7 @@
 import pygame
 import sys
 from enum import Enum
+import random
 
 pygame.init()
 
@@ -13,6 +14,11 @@ class Direction(Enum):
     UP = 2
     RIGHT = 3
     DOWN = 4
+
+class Mouse:
+    def __init__( self ):
+        print( random.randrange( 0, WindowWidth, 1) )
+        self.body = pygame.Rect((random.randrange( 0, WindowWidth - 10, 10), random.randrange( 0, WindowHeight - 10, 10), 10, 10 ))
 
 class Snake:
     def __init__( self ):
@@ -39,6 +45,7 @@ class Snake:
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
 
 snake = Snake()
+mouse = Mouse()
 
 clock = pygame.time.Clock()
 
@@ -46,10 +53,10 @@ moveRate = 5
 
 playing = True
 while playing:
-
     screen.fill((0, 0, 0))
 
     pygame.draw.rect(screen, (0,255,0), snake.body)
+    pygame.draw.rect( screen, (255,255,255), mouse.body)
 
     key = pygame.key.get_pressed()
 
@@ -61,7 +68,7 @@ while playing:
         snake.direction = Direction.UP
     elif key[pygame.K_s] == True or key[pygame.K_DOWN] == True:
         snake.direction = Direction.DOWN
-    
+
     snake.Move( moveRate )
 
     for event in pygame.event.get():
