@@ -34,9 +34,7 @@ WindowHeight = 480
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
 
-snake = pygame.Rect((300,250,10,10))
-
-direction = Direction.RIGHT
+snake = Snake(WindowWidth, WindowHeight)
 
 clock = pygame.time.Clock()
 
@@ -47,22 +45,20 @@ while playing:
 
     screen.fill((0, 0, 0))
 
-    pygame.draw.rect(screen, (0,255,0), snake)
+    pygame.draw.rect(screen, (0,255,0), snake.body)
 
     key = pygame.key.get_pressed()
 
     if key[pygame.K_a] == True or key[pygame.K_LEFT] == True:
-        if snake.left >= moveRate:
-            snake.move_ip(-moveRate, 0)
+        snake.direction = Direction.LEFT
     elif key[pygame.K_d] == True or key[pygame.K_RIGHT] == True:
-        if snake.right <= WindowWidth - moveRate:
-            snake.move_ip( moveRate, 0)
+        snake.direction = Direction.RIGHT
     elif key[pygame.K_w] == True or key[pygame.K_UP] == True:
-        if snake.top >= moveRate:
-            snake.move_ip( 0, -moveRate)
+        snake.direction = Direction.UP
     elif key[pygame.K_s] == True or key[pygame.K_DOWN] == True:
-        if snake.bottom <= WindowHeight - moveRate:
-            snake.move_ip( 0, moveRate)
+        snake.direction = Direction.DOWN
+    
+    snake.Move( moveRate )
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
