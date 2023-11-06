@@ -10,6 +10,25 @@ class Direction(Enum):
     RIGHT = 3
     DOWN = 4
 
+class Snake:
+    def __init__( self, windowWidth, windowHeight ):
+        self.direction = Direction.RIGHT
+        self.body = pygame.Rect(( windowWidth / 2, windowHeight / 2, 10, 10 ))
+    
+    def Move( self, moveRate ):
+        if self.direction == Direction.LEFT:
+            if self.body.left >= moveRate:
+                self.body.move_ip(-moveRate, 0)
+        if self.direction == Direction.RIGHT:
+            if self.body.right <= WindowWidth - moveRate:
+                self.body.move_ip( moveRate, 0)
+        if self.direction == Direction.UP:
+            if self.body.top >= moveRate:
+                self.body.move_ip( 0, -moveRate)
+        if self.direction == Direction.DOWN:
+            if self.body.bottom <= WindowHeight - moveRate:
+                self.body.move_ip( 0, moveRate)
+
 WindowWidth = 640
 WindowHeight = 480
 
