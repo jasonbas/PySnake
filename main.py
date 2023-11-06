@@ -1,18 +1,27 @@
 import pygame
 import sys
+from enum import Enum
 
 pygame.init()
+
+class Direction(Enum):
+    LEFT = 1
+    UP = 2
+    RIGHT = 3
+    DOWN = 4
 
 WindowWidth = 640
 WindowHeight = 480
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
 
-snake = pygame.Rect((300,250,50,50))
+snake = pygame.Rect((300,250,10,10))
+
+direction = Direction.RIGHT
 
 clock = pygame.time.Clock()
 
-moveRate = 10
+moveRate = 5
 
 playing = True
 while playing:
