@@ -66,10 +66,6 @@ clock = pygame.time.Clock()
 
 playing = True
 while playing:
-    screen.fill((0, 0, 0))
-
-    pygame.draw.rect(screen, (0,255,0), snake.body)
-    pygame.draw.rect(screen, (255,255,255), mouse.body)
 
     key = pygame.key.get_pressed()
 
@@ -87,6 +83,11 @@ while playing:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             playing = False
+
+    screen.fill((0, 0, 0))
+
+    pygame.draw.rect(screen, (0,255,0), snake.body)
+    pygame.draw.rect(screen, (255,255,255), mouse.body)
 
     pygame.display.update()
 
