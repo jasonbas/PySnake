@@ -3,11 +3,6 @@ import sys
 from enum import Enum
 import random
 
-pygame.init()
-
-WindowWidth = 640
-WindowHeight = 480
-
 class Direction(Enum):
     UNDEFINED = 0
     LEFT = 1
@@ -41,6 +36,11 @@ class Snake:
         elif self.direction == Direction.DOWN:
             if self.body.bottom <= WindowHeight - moveRate:
                 self.body.move_ip( 0, moveRate)
+
+pygame.init()
+
+WindowWidth = 640
+WindowHeight = 480
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
 
