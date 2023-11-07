@@ -13,8 +13,8 @@ class Direction(Enum):
 class Mouse:
     def __init__( self ):
         print( random.randrange( 0, WindowWidth, 1) )
-        self.body = pygame.Rect((random.randrange( 0, WindowWidth - 10, 10), 
-                                 random.randrange( 0, WindowHeight - 10, 10), 
+        self.body = pygame.Rect((random.randrange( 0, WindowWidth - BodySize, BodySize), 
+                                 random.randrange( 0, WindowHeight - BodySize, BodySize), 
                                  BodySize, 
                                  BodySize ))
 
@@ -53,7 +53,7 @@ pygame.init()
 #Defines
 WindowWidth = 640
 WindowHeight = 480
-BodySize = 10
+BodySize = 20
 MoveRate = 2
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
