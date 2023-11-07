@@ -13,17 +13,28 @@ class Direction(Enum):
 class Mouse:
     def __init__( self ):
         print( random.randrange( 0, WindowWidth, 1) )
-        self.body = pygame.Rect((random.randrange( 0, WindowWidth - 10, 10), random.randrange( 0, WindowHeight - 10, 10), 10, 10 ))
+        self.body = pygame.Rect((random.randrange( 0, WindowWidth - 10, 10), 
+                                 random.randrange( 0, WindowHeight - 10, 10), 
+                                 BodySize, 
+                                 BodySize ))
 
 class Snake:
     def __init__( self ):
         self.direction = Direction.UNDEFINED
-        self.body = pygame.Rect(( WindowWidth / 2, WindowHeight / 2, 10, 10 ))
+        self.body = pygame.Rect(( WindowWidth / 2, WindowHeight / 2, 
+                                 BodySize, BodySize ))
 
     def Move( self, moveRate ):
         if self.direction == Direction.UNDEFINED:
             return
-                
+        
+        if self.direction == Direction.RIGHT or self.direction == Direction.LEFT:
+            remainder = self.body.top % BodySize
+            self.body.move_ip( 0, -remainder)
+        if self.direction == Direction.UP or self.direction == Direction.DOWN:
+            remainder = self.body.left % BodySize
+            self.body.move_ip( -remainder, 0)
+
         if self.direction == Direction.LEFT:
             if self.body.left >= moveRate:
                 self.body.move_ip(-moveRate, 0)
@@ -39,8 +50,11 @@ class Snake:
 
 pygame.init()
 
+#Defines
 WindowWidth = 640
 WindowHeight = 480
+BodySize = 10
+MoveRate = 2
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
 pygame.display.set_caption('Snake')
@@ -50,14 +64,12 @@ mouse = Mouse()
 
 clock = pygame.time.Clock()
 
-moveRate = 5
-
 playing = True
 while playing:
     screen.fill((0, 0, 0))
 
     pygame.draw.rect(screen, (0,255,0), snake.body)
-    pygame.draw.rect( screen, (255,255,255), mouse.body)
+    pygame.draw.rect(screen, (255,255,255), mouse.body)
 
     key = pygame.key.get_pressed()
 
@@ -70,7 +82,7 @@ while playing:
     elif key[pygame.K_s] == True or key[pygame.K_DOWN] == True:
         snake.direction = Direction.DOWN
 
-    snake.Move( moveRate )
+    snake.Move( MoveRate )
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -78,8 +90,10 @@ while playing:
 
     pygame.display.update()
 
-    clock.tick(30)
-    fps = clock.get_fps()
+    # print('Mouse', mouse.body)
+    # print('Snake', snake.body)
+
+    clock.tick(60)
 
 pygame.quit()
 sys.exit()
