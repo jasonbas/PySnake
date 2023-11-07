@@ -43,6 +43,7 @@ WindowWidth = 640
 WindowHeight = 480
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
+pygame.display.set_caption('Snake')
 
 snake = Snake()
 mouse = Mouse()
