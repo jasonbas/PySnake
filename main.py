@@ -128,6 +128,8 @@ class Snake:
             return Direction.LEFT
         elif currSegment.left - nextSegment.left < 0 and currSegment.top - nextSegment.top == 0:
             return Direction.RIGHT
+        else:
+            return Direction.UNDEFINED
 
 
 pygame.init()
