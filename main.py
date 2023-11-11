@@ -56,16 +56,15 @@ class Snake:
 
         head = self.segments[0]
         if self.changingDirection is True:
+            remainder = -1
             if self.direction == Direction.RIGHT or self.direction == Direction.LEFT:
                 remainder = head.width % BodySize
-                if remainder == 0:
-                    self.direction = self.requestedDirection
-                    self.changingDirection = False          
-            elif self.direction == Direction.UP or self.direction == Direction.DOWN:
-                remainder = head.height % BodySize
-                if remainder == 0:
-                    self.direction = self.requestedDirection
-                    self.changingDirection = False
+            else:
+                remainder = head.height % BodySize 
+            
+            if remainder == 0:
+                self.direction = self.requestedDirection
+                self.changingDirection = False
         
         self.UpdateSegments()
     
