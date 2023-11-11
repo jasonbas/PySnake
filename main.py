@@ -164,6 +164,23 @@ while playing:
 
     snake.Move()
 
+    #Check if snake is eating mouse
+    snakeHead = snake.segments[0]
+    if snakeHead.colliderect( mouse.body ):
+        mouse = Mouse()
+
+        #Find a spawn spot for mouse not on snake body
+        keepSpawningMouse = True
+        while keepSpawningMouse:
+            respawned = False
+            for segment in snake.segments:
+                if segment.colliderect( mouse.body ):
+                    mouse = Mouse()
+                    respawned = True
+                
+            if respawned is False:
+                keepSpawningMouse = False
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             playing = False
