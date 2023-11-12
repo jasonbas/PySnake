@@ -29,6 +29,7 @@ class Snake:
         self.direction = Direction.UNDEFINED
         self.requestedDirection = Direction.UNDEFINED
         self.changingDirection = False
+        self.GrowthRemaining = 0
         
     def ChangeDirection( self, direction ):
         if self.direction is direction:
@@ -54,6 +55,7 @@ class Snake:
         if self.direction == Direction.UNDEFINED:
             return
 
+        #Change direction if needed
         head = self.segments[0]
         if self.changingDirection is True:
             remainder = -1
@@ -69,11 +71,15 @@ class Snake:
         self.UpdateSegments()
     
     def UpdateSegments( self ):
-        head = self.segments[0]
-        tail = self.segments[len(self.segments) - 1]
-        segmentBeforeTail = self.segments[len(self.segments) - 2]
+        self.UpdateHead()
 
-        #Update head
+        if self.GrowthRemaining <= 0:
+            self.UpdateTail()
+        else:
+            self.GrowthRemaining = self.GrowthRemaining - MoveRate
+
+    def UpdateHead( self ):
+        head = self.segments[0]
         if self.direction == Direction.LEFT:
             if head.width % BodySize == 0:
                 self.segments.insert(0,pygame.Rect(head.left - MoveRate, head.top, MoveRate, BodySize))
@@ -95,7 +101,10 @@ class Snake:
             else:
                 head.update( head.left, head.top, head.width, head.height + MoveRate)
 
-        #Update tail
+
+    def UpdateTail( self ):
+        tail = self.segments[len(self.segments) - 1]
+        segmentBeforeTail = self.segments[len(self.segments) - 2]
         decayDirection = self.DirectionOfNextSegment(tail, segmentBeforeTail)
 
         if decayDirection is Direction.LEFT:
@@ -131,6 +140,8 @@ class Snake:
         else:
             return Direction.UNDEFINED
 
+    def StartGrowing( self ):
+        self.GrowthRemaining = BodySize
 
 pygame.init()
 
@@ -168,6 +179,7 @@ while playing:
     snakeHead = snake.segments[0]
     if snakeHead.colliderect( mouse.body ):
         mouse = Mouse()
+        snake.StartGrowing()
 
         #Find a spawn spot for mouse not on snake body
         keepSpawningMouse = True
