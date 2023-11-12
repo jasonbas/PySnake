@@ -171,9 +171,12 @@ WindowWidth = 640
 WindowHeight = 480
 BodySize = 20
 MoveRate = 4
+MiceEaten = 0
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
-pygame.display.set_caption('Snake')
+
+display = "PySnake ----- Mice Eaten: %d" % MiceEaten
+pygame.display.set_caption(display) 
 
 snake = Snake()
 mouse = Mouse()
@@ -194,6 +197,7 @@ while playing:
     elif key[pygame.K_s] == True or key[pygame.K_DOWN] == True:
         snake.ChangeDirection( Direction.DOWN )
 
+    #Move snake
     snake.Move()
 
     #Check if snake is eating mouse
@@ -201,6 +205,11 @@ while playing:
     if snakeHead.colliderect( mouse.body ):
         mouse = Mouse()
         snake.StartGrowing()
+
+        #Update window with score
+        MiceEaten += 1        
+        display = "PySnake ----- Mice Eaten: %d" % MiceEaten
+        pygame.display.set_caption(display) 
 
         #Find a spawn spot for mouse not on snake body
         keepSpawningMouse = True
