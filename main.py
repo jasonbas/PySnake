@@ -143,6 +143,27 @@ class Snake:
     def StartGrowing( self ):
         self.GrowthRemaining = BodySize
 
+    def IsColliding( self ):
+        head = self.segments[0]
+        for segment in self.segments[1:]:
+            if head.colliderect(segment):
+                return True
+            
+        if self.direction == Direction.LEFT:
+            if self.segments[0].left < MoveRate:
+                return True
+        elif self.direction == Direction.RIGHT:
+            if self.segments[0].right > WindowWidth - MoveRate:
+                return True
+        elif self.direction == Direction.UP:
+            if self.segments[0].top < MoveRate:
+                return True
+        elif self.direction == Direction.DOWN:
+            if self.segments[0].bottom > WindowHeight - MoveRate:
+                return True
+            
+        return False
+
 pygame.init()
 
 #Defines
@@ -192,6 +213,9 @@ while playing:
                 
             if respawned is False:
                 keepSpawningMouse = False
+    
+    if snake.IsColliding():
+        playing = False
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
