@@ -153,16 +153,16 @@ class Snake:
                 return True
             
         if self.direction == Direction.LEFT:
-            if self.segments[0].left < MoveRate:
+            if self.segments[0].left < 0:
                 return True
         elif self.direction == Direction.RIGHT:
-            if self.segments[0].right > WindowWidth - MoveRate:
+            if self.segments[0].right > WindowWidth:
                 return True
         elif self.direction == Direction.UP:
-            if self.segments[0].top < MoveRate:
+            if self.segments[0].top < 0:
                 return True
         elif self.direction == Direction.DOWN:
-            if self.segments[0].bottom > WindowHeight - MoveRate:
+            if self.segments[0].bottom > WindowHeight:
                 return True
             
         return False
