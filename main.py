@@ -36,6 +36,9 @@ class Snake:
             return
         
         if self.direction is Direction.UNDEFINED:
+            if direction is Direction.LEFT: #Can't start game moving left
+                return
+        
             self.direction = direction
             return
         
