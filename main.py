@@ -226,13 +226,6 @@ while playing:
             if respawned is False:
                 keepSpawningMouse = False
     
-    if snake.IsColliding():
-        playing = False
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            playing = False
-
     screen.fill((0, 0, 0))
 
     for segment in snake.segments:
@@ -242,10 +235,14 @@ while playing:
 
     pygame.display.update()
 
-    # print('Mouse', mouse.body)
-    # print('Snake', snake.body)
-
     clock.tick(60)
+    
+    if snake.IsColliding():
+        playing = False
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            playing = False
 
 pygame.quit()
 sys.exit()
