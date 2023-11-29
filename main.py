@@ -173,7 +173,7 @@ pygame.init()
 WindowWidth = 640
 WindowHeight = 480
 BodySize = 20
-MoveRate = 4
+MoveRate = 2
 MiceEaten = 0
 
 screen = pygame.display.set_mode((WindowWidth, WindowHeight))
